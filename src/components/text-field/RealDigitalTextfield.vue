@@ -4,7 +4,6 @@
       {{ name }}
     </label>
     <input :id="name" v-model="value" />
-    {{ showErrorMessage }}
     <p v-if="showErrorMessage" data-testid="text-field-error">
       {{ name }} must follow the pattern {{ validation }}
     </p>
