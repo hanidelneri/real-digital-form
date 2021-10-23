@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="['text-field', { error: showErrorMessage }]">
     <label :for="name">
       {{ name }}
     </label>
@@ -42,3 +42,46 @@ export default {
   },
 };
 </script>
+<style lang="sass" scoped>
+$error-color: red
+$label-color: #aaa
+$base-space: 4px
+
+.text-field
+  font-size: 14px
+  display: flex
+  flex-direction: column
+  margin-bottom: $base-space * 4
+  input
+    border: none
+    appearance: none
+    background: #f2f2f2
+    padding: $base-space * 3
+    border-radius: 3px
+    width: 250px
+    font-size: 14px
+  &:not(.error)
+    input:focus, input:focus-visible
+      outline-color: $label-color
+
+  label
+    color: $label-color
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+    text-transform: capitalize
+    margin-bottom: $base-space * 2
+  p
+    color: $error-color
+    margin-top: $base-space
+    margin-bottom: 0
+  &.error
+    input
+      border: 1px solid $error-color
+      &:focus, &:focus-visible
+        outline-color: $error-color
+        border: none
+  &.error
+    label
+      color: $error-color
+</style>
