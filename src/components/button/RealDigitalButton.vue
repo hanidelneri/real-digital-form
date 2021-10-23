@@ -1,5 +1,5 @@
 <template>
-  <button @click="onClick">
+  <button :disabled="disabled" @click="onClick">
     <slot />
   </button>
 </template>
@@ -7,9 +7,18 @@
 import { REAL_DIGITAL_BUTTON } from "@/components/names";
 export default {
   name: REAL_DIGITAL_BUTTON,
+  data() {
+    return {
+      disabled: false,
+    };
+  },
   methods: {
-    onClick() {
-      if (this.$parent && this.$parent.submit) this.$parent.submit();
+    async onClick() {
+      if (this.$parent && this.$parent.submit) {
+        this.disabled = true;
+        await this.$parent.submit();
+        this.disabled = false;
+      }
       this.$emit("click");
     },
   },
