@@ -1,8 +1,13 @@
 <template>
   <div>
     <transition name="fade">
-      <p class="error">
+      <p v-if="errorMessage" class="error">
         {{ errorMessage }}
+      </p>
+    </transition>
+    <transition name="fade">
+      <p v-if="isSuccessful" class="success">
+        Successfully submitted the form!
       </p>
     </transition>
     <form novalidate onsubmit="return false">
@@ -29,6 +34,7 @@ export default {
     return {
       validationStatus: [],
       errorMessage: "",
+      isSuccessful: false,
     };
   },
   computed: {
@@ -43,12 +49,14 @@ export default {
         if (this.isValid) {
           const values = this.getValues();
           this.$emit("onSubmit", values);
+          this.isSuccessful = false;
           const response = await axios({
             method: this.method,
             url: this.action,
             data: values,
           });
           this.resetErrorMessage();
+          this.isSuccessful = true;
           this.$emit("onResponse", response.json);
         }
       } catch (error) {
@@ -79,4 +87,6 @@ export default {
 
 .error
   color: $error-color
+.success
+  color: $success-color
 </style>
