@@ -4,9 +4,11 @@
       {{ name }}
     </label>
     <input :id="name" v-model="value" />
-    <p v-if="showErrorMessage" data-testid="text-field-error">
-      {{ name }} must follow the pattern {{ validation }}
-    </p>
+    <transition name="fade">
+      <p v-if="showErrorMessage" data-testid="text-field-error">
+        {{ name }} must follow the pattern {{ validation }}
+      </p>
+    </transition>
   </div>
 </template>
 <script>
@@ -43,9 +45,7 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
-$error-color: red
-$label-color: #aaa
-$base-space: 4px
+@import '@/assets/variables.sass'
 
 .text-field
   font-size: 14px
@@ -58,14 +58,14 @@ $base-space: 4px
     background: #f2f2f2
     padding: $base-space * 3
     border-radius: 3px
-    width: 250px
+    width: $input-width
     font-size: 14px
   &:not(.error)
     input:focus, input:focus-visible
-      outline-color: $label-color
+      outline-color: $gray-color
 
   label
-    color: $label-color
+    color: #706f6f
     overflow: hidden
     white-space: nowrap
     text-overflow: ellipsis
