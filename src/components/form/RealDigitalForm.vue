@@ -1,6 +1,10 @@
 <template>
   <div>
-    <p v-if="errorMessage">{{ errorMessage }}</p>
+    <transition name="fade">
+      <p class="error">
+        {{ errorMessage }}
+      </p>
+    </transition>
     <form novalidate onsubmit="return false">
       <slot />
     </form>
@@ -70,3 +74,9 @@ export default {
   },
 };
 </script>
+<style lang="sass" scoped>
+@import '@/assets/variables.sass'
+
+.error
+  color: $error-color
+</style>
